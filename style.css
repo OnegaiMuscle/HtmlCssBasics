@@ -1,1 +1,21 @@
 
+ul li:has(input:checked) p {
+  display: inline;
+  border: 2px solid red;
+}
+li {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+
+}
+
+p {
+  display: none
+}
+
+div:has(input[type=checkbox]:checked)  label{
+  background: red;
+}
