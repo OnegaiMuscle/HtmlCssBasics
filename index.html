@@ -29,5 +29,206 @@
   <label for="2">test</label>
   <label for="3">test</label>
 </div>
+
+<div id="menu"></div>
+
+<script>
+    function genererListeCategories(categorie, niveau = 0) {
+        let html = `<ul style="font-size: ${20 - niveau * 2}px;"><li>${categorie.nom}</li>`;
+
+        if (categorie.sousCategories.length > 0) {
+            categorie.sousCategories.forEach(sousCategorie => {
+                html += genererListeCategories(sousCategorie, niveau + 1);
+            });
+        }
+
+        html += `</ul>`;
+        return html;
+    }
+
+    const data = {
+        "nom": "Produits",
+        "sousCategories": [
+            {
+                "nom": "Électronique",
+                "sousCategories": [
+                    {
+                        "nom": "Téléphones",
+                        "sousCategories": []
+                    },
+                    {
+                        "nom": "Ordinateurs",
+                        "sousCategories": [
+                            {
+                                "nom": "Portables",
+                                "sousCategories": []
+                            },
+                            {
+                                "nom": "Desktops",
+                                "sousCategories": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nom": "Vêtements",
+                "sousCategories": [
+                    {
+                        "nom": "Hommes",
+                        "sousCategories": []
+                    },
+                    {
+                        "nom": "Femmes",
+                        "sousCategories": []
+                    }
+                ]
+            }
+        ]
+    };
+
+    document.getElementById('menu').innerHTML = genererListeCategories(data);
+</script>
+
+
+<div id="menud"></div>
+
+<script>
+    function genererListeCategories(categorie, niveau = 0) {
+        let html = `<select style="font-size: ${20 - niveau * 2}px;">`;
+        html += `<option>${categorie.nom}</option>`;
+
+        if (categorie.sousCategories.length > 0) {
+            categorie.sousCategories.forEach(sousCategorie => {
+                html += genererListeCategories(sousCategorie, niveau + 1);
+            });
+        }
+
+        html += `</select>`;
+        return html;
+    }
+
+    const datad = {
+        "nom": "Produits",
+        "sousCategories": [
+            {
+                "nom": "Électronique",
+                "sousCategories": [
+                    {
+                        "nom": "Téléphones",
+                        "sousCategories": []
+                    },
+                    {
+                        "nom": "Ordinateurs",
+                        "sousCategories": [
+                            {
+                                "nom": "Desktops",
+                                "sousCategories": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nom": "Vêtements",
+                "sousCategories": [
+                    {
+                        "nom": "Hommes",
+                        "sousCategories": []
+                    },
+                    {
+                        "nom": "Femmes",
+                        "sousCategories": []
+                    }
+                ]
+            }
+        ]
+    };
+
+    document.getElementById('menud').innerHTML = genererListeCategories(datad);
+</script>
+
+
+
+<div id="menue"></div>
+
+<script>
+    function genererListeCategories(categorie, niveau = 0) {
+        let html = `<select style="font-size: ${20 - niveau * 2}px;" onchange="afficherSousCategories(this, ${niveau})">`;
+        html += `<option value="">${categorie.nom}</option>`;
+
+        if (categorie.sousCategories.length > 0) {
+            categorie.sousCategories.forEach(sousCategorie => {
+                html += `<option value="${sousCategorie.nom}">${sousCategorie.nom}</option>`;
+            });
+        }
+
+        html += `</select>`;
+        return html;
+    }
+
+    function afficherSousCategories(select, niveau) {
+        const sousCategorieNom = select.value;
+        const sousCategorie = trouverSousCategorie(data, sousCategorieNom);
+        const sousCategorieHtml = sousCategorie ? genererListeCategories(sousCategorie, niveau + 1) : '';
+        const sousCategorieDiv = document.createElement('div');
+        sousCategorieDiv.innerHTML = sousCategorieHtml;
+        select.parentNode.appendChild(sousCategorieDiv);
+    }
+
+    function trouverSousCategorie(categorie, nom) {
+        if (categorie.nom === nom) {
+            return categorie;
+        }
+        for (let sousCategorie of categorie.sousCategories) {
+            const result = trouverSousCategorie(sousCategorie, nom);
+            if (result) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    const datae = {
+        "nom": "Produits",
+        "sousCategories": [
+            {
+                "nom": "Électronique",
+                "sousCategories": [
+                    {
+                        "nom": "Téléphones",
+                        "sousCategories": []
+                    },
+                    {
+                        "nom": "Ordinateurs",
+                        "sousCategories": [
+                            {
+                                "nom": "Desktops",
+                                "sousCategories": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nom": "Vêtements",
+                "sousCategories": [
+                    {
+                        "nom": "Hommes",
+                        "sousCategories": []
+                    },
+                    {
+                        "nom": "Femmes",
+                        "sousCategories": []
+                    }
+                ]
+            }
+        ]
+    };
+
+    document.getElementById('menue').innerHTML = genererListeCategories(datae);
+</script>
+</body>
+</html>
 </body>
 </html>
